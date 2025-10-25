@@ -87,6 +87,7 @@ wvs |> count(politics)
 wvs |> count(work)
 wvs |> count(religion)
 wvs |> count(residence)
+wvs |> count(happy)
 
 ```
 
