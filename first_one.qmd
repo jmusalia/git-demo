@@ -2,7 +2,7 @@
 title: "Analysis of Kenyan Social Values from World Values Survey "
 format: pdf
 ---
-I really do not know what I am doing here but I am doing it anyway. Hopefully, I will eventually figure out what it is that I am doing. Good luck my man.
+I really do not know what I am doing here but I am doing it anyway. Hopefully, I will eventually figure out what it is that I am doing. Good luck my man. I am slowly getting it...
 
 ### Installing packages
 ```{r}
@@ -88,7 +88,6 @@ wvs |> count(work)
 wvs |> count(religion)
 wvs |> count(residence)
 wvs |> count(happy)
-
 ```
 
 ```{r}
