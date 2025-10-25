@@ -1,0 +1,251 @@
+---
+title: "Analysis of Kenyan Social Values from World Values Survey "
+format: pdf
+---
+I really do not know what I am doing here but I am doing it anyway. Hopefully, I will eventually figure out what it is that I am doing. Good luck my man.
+
+### Installing packages
+```{r}
+#install.packages("tidyverse")
+#install.packages("gtsummary")
+#install.packages("gt")
+#install.packages("here")
+#install.packages("usethis")
+```
+### Libraries
+```{r}
+library(tidyverse)
+library(gtsummary)
+library(gt)
+library(here)
+library(usethis)
+```
+
+## Reading Data
+```{r}
+wvs <- read_csv(here("Data","WVS.csv"))
+wvs <- rename_with(wvs, tolower)
+#wvs <- wvs |> 
+#    mutate(across(everything(), ~replace(., .x < 0, NA)))
+wvs |> count(q1)
+
+```
+
+## Checking what kind of variables to work on
+
+```{r}
+wvs <- wvs |> 
+    filter(b_country_alpha == "KEN") |> 
+    mutate(sex = ifelse(q260 == 1, "Male", "Female"),
+           Friends = case_when(q2 ==1 ~ "Very Important",
+                               q2 == 2 ~ "Rather Important",
+                               q2 == 3 ~ " Not Very Important",
+                               q2 == 4 ~ "Not at all Important"),
+            friends = factor(q2,
+                             levels = c(1,2,3,4),
+                             labels = c("Very Important", 
+                                        "Rather Important", 
+                                        "Not Very Important", 
+                                        "Not at all Important")),
+            leisure = factor(q3,
+                             levels = c(1,2,3,4),
+                             labels = c("Very Important", 
+                                        "Rather Important", 
+                                        "Not Very Important", 
+                                        "Not at all Important")),
+            politics = factor(q4,
+                              levels = c(1,2,3,4),
+                              labels = c("Very Important", 
+                                         "Rather Important", 
+                                         "Not Very Important", 
+                                         "Not at all Important")),
+            work = factor(q5,
+                          levels = c(1,2,3,4),
+                          labels = c("Very Important", 
+                                     "Rather Important", 
+                                     "Not Very Important", 
+                                     "Not at all Important")),
+            religion = factor(q6,
+                              levels = c(1,2,3,4),
+                              labels = c("Very Important", 
+                                         "Rather Important", 
+                                         "Not Very Important", 
+                                         "Not at all Important")),
+            residence = factor(h_urbrural,
+                               levels = c(1,2),
+                               labels = c("Urban", "Rural"))
+            )
+wvs |> count(Friends)
+wvs |> count(leisure)
+wvs |> count(politics)
+wvs |> count(work)
+wvs |> count(religion)
+wvs |> count(residence)
+
+```
+
+```{r}
+#Friends
+wvs |> 
+    drop_na(sex, Friends) |> 
+    ggplot(aes(x=sex, 
+               y =after_stat(prop*100), group= friends, fill=friends)) +
+    geom_bar(position = "dodge") +
+    scale_fill_viridis_d(option="E")
+
+#wvs |> count(q260)
+```
+
+## Friends
+```{r}
+
+wvs |> 
+    drop_na(sex, friends) |> 
+    ggplot(aes(x = sex, fill = friends)) +
+    geom_bar(position = "fill") +
+scale_fill_viridis_d(option = "E") +
+labs(title = "Friends and Gender",
+y = "Percent",
+x = "Gender",
+fill = "Friends are ...")
+
+```
+
+## Friends by Residence
+```{r}
+wvs |> 
+    drop_na(residence, friends) |> 
+    ggplot(aes(x = residence, fill = friends)) +
+    geom_bar(position = "fill") +
+scale_fill_viridis_d(option = "E") +
+labs(title = "Residence and Friends",
+y = "Percent",
+x = "Residence",
+fill = "Friends are ...")
+
+
+```
+
+## Leisure
+```{r}
+wvs |> 
+    drop_na(sex, leisure) |> 
+    ggplot(aes(x = sex, fill = leisure)) +
+    geom_bar(position = "fill") +
+scale_fill_viridis_d(option = "E") +
+labs(title = "Gender and Leisure",
+y = "Percent",
+x = "Gender",
+fill = "Leisure is ...")
+
+```
+
+## Leisure with Residence
+```{r}
+wvs |> 
+    drop_na(residence, leisure) |> 
+    ggplot(aes(x = residence, fill = leisure)) +
+    geom_bar(position = "fill") +
+scale_fill_viridis_d(option = "E") +
+labs(title = "Residence and Leisure",
+y = "Percent",
+x = "Residence",
+fill = "Leisure is ...")
+
+
+
+```
+
+## Politics
+
+```{r}
+wvs |> 
+    drop_na(sex, politics) |> 
+    ggplot(aes(x = sex, fill = politics)) +
+    geom_bar(position = "fill") +
+scale_fill_viridis_d(option = "E") +
+labs(title = "Politics and Gender",
+y = "Percent",
+x = "Gender",
+fill = "Politics is ...")
+
+``` 
+
+## Politics and Residence
+
+```{r}
+wvs |> 
+    drop_na(residence, politics) |> 
+    ggplot(aes(x = residence, fill = politics)) +
+    geom_bar(position = "fill") +
+scale_fill_viridis_d(option = "E") +
+labs(title = "Politics and Residence",
+y = "Percent",
+x = "Residence",
+fill = "Politics is ...")
+```
+
+
+## Work
+```{r}
+wvs |> 
+    drop_na(sex, work) |> 
+    ggplot(aes(x = sex, fill = work)) +
+    geom_bar(position = "fill") +
+scale_fill_viridis_d(option = "E") +
+labs(title = "Work and Gender",
+y = "Percent",
+x = "Gender",
+fill = "Work is ...")
+```
+
+## Work and Residence
+
+```{r}
+wvs |> 
+    drop_na(residence, work) |> 
+    ggplot(aes(x = residence, fill = work)) +
+    geom_bar(position = "fill") +
+scale_fill_viridis_d(option = "E") +
+labs(title = "Work and Residence",
+y = "Percent",
+x = "Residence",
+fill = "Work is ...")
+
+```
+
+
+## Religion
+```{r}
+wvs |> 
+    drop_na(sex, religion) |> 
+    ggplot(aes(x = sex, fill = religion)) +
+    geom_bar(position = "fill") +
+scale_fill_viridis_d(option = "E") +
+labs(title = "Religion and Gender",
+y = "Percent",
+x = "Gender",
+fill = "Religion is ...")
+
+```
+
+## Religion and Residence
+
+
+```{r}
+wvs |> 
+    drop_na(residence, religion) |> 
+    ggplot(aes(x = residence, fill = religion)) +
+    geom_bar(position = "fill") +
+scale_fill_viridis_d(option = "E") +
+labs(title = "Religion and Residence",
+y = "Percent",
+x = "Residence",
+fill = "Religion is ...")
+
+```
+
+
+```{r}
+
+```
