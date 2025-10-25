@@ -2,7 +2,7 @@
 title: "Analysis of Kenyan Social Values from World Values Survey "
 format: pdf
 ---
-I really do not know what I am doing here but I am doing it anyway. Hopefully, I will eventually figure out what it is that I am doing. Good luck my man.
+I really do not know what I am doing here but I am doing it anyway. Hopefully, I will eventually figure out what it is that I am doing. Good luck my man. I am slowly getting it...
 
 ### Installing packages
 ```{r}
@@ -73,7 +73,13 @@ wvs <- wvs |>
                                          "Not at all Important")),
             residence = factor(h_urbrural,
                                levels = c(1,2),
-                               labels = c("Urban", "Rural"))
+                               labels = c("Urban", "Rural")),
+           happy = factor(q46,
+                          levels = c(1,2,3.4),
+                          labels = c("Very Happy",
+                                     "Quite Happy",
+                                     "Not Very Happy",
+                                     "Not at all Happy"))
             )
 wvs |> count(Friends)
 wvs |> count(leisure)
@@ -81,7 +87,7 @@ wvs |> count(politics)
 wvs |> count(work)
 wvs |> count(religion)
 wvs |> count(residence)
-
+wvs |> count(happy)
 ```
 
 ```{r}
