@@ -74,7 +74,7 @@ wvs <- wvs |>
                                levels = c(1,2),
                                labels = c("Urban", "Rural")),
            happy = factor(q46,
-                          levels = c(1,2,3.4),
+                          levels = c(1,2,3,4),
                           labels = c("Very Happy",
                                      "Quite Happy",
                                      "Not Very Happy",
