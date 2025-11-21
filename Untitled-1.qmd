@@ -1,0 +1,30 @@
+---
+title: "Untitled"
+format: html
+---
+
+
+```{r}
+#install.packages("usethis")
+library(usethis)
+library(gitcreds)
+
+```
+
+```{r}
+ use_git_config(
+    user.name = "jmusalia",
+    user.email = "kauka10@yahoo.com"
+ )
+```
+
+Here are we are creating a github token
+```{r}
+#this is arealdy done
+create_github_token()
+```
+
+This is github credentials. Asks for token
+```{r}
+gitcreds_set()
+```

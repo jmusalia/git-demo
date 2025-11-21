@@ -2,7 +2,6 @@
 title: "Analysis of Kenyan Social Values from World Values Survey "
 format: pdf
 ---
-I really do not know what I am doing here but I am doing it anyway. Hopefully, I will eventually figure out what it is that I am doing. Good luck my man. I am slowly getting it...
 
 ### Installing packages
 ```{r}
@@ -75,7 +74,7 @@ wvs <- wvs |>
                                levels = c(1,2),
                                labels = c("Urban", "Rural")),
            happy = factor(q46,
-                          levels = c(1,2,3.4),
+                          levels = c(1,2,3,4),
                           labels = c("Very Happy",
                                      "Quite Happy",
                                      "Not Very Happy",
@@ -248,10 +247,5 @@ labs(title = "Religion and Residence",
 y = "Percent",
 x = "Residence",
 fill = "Religion is ...")
-
-```
-
-
-```{r}
 
 ```
